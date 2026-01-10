@@ -6,10 +6,11 @@
    "permissions": [
     "storage",
     "activeTab",
-    "scripting"
+    "scripting",
+    "offscreen"
   ],
    "host_permissions": [
-    "https://www.hdap.ca/*"
+    "https://www.hdap.ca/store/checkout-*"
   ],
    "background": {
     "service_worker": "background.js"
@@ -19,8 +20,11 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.hdap.ca/*"],
+      "matches": ["https://www.hdap.ca/store/checkout-*"],
       "js": ["content.js"]
     }
-  ]
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'"
+  }
 }
