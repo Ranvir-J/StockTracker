@@ -28,7 +28,7 @@ setInterval(() => {
   if (serialized !== lastItems) {
     lastItems = serialized;
     chrome.runtime.sendMessage({
-      type: "CART_UPDATE",
+      type: "STOCK_UPDATE",
       payload: items
     });
   }

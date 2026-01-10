@@ -1,11 +1,38 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html> <!-- Add to the popup information about what is being recorded if they press the update stock button -->
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="popup.css">
+    <meta charset="UTF-8" />
+    <title>StockTracker</title>
+    <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-  <h3>Tracked Cart</h3>
-  <ul id="cart"></ul>
-  <script src="popup.js"></script>
+    <div class="popup-container">
+        <header class="popup-header">
+            <h1 class="app-title">StockTracker</h1>
+        </header>
+
+        <main class="popup-content">
+            <p class="boilerplate-text">
+                Welcome to StockTracker. Use this extension to quickly view and
+                update stock information without leaving your browser.
+            </p>
+
+            <div class="button-group">
+                <button class="primary-button" id="view-stock-btn">
+                    View Stock
+                </button>
+
+                <button class="secondary-button" id="update-stock-btn">
+                    Update Stock
+                </button>
+            </div>
+
+            <p class="boilerplate-text subtle">
+                What will be added to the stock upon pressing the button:
+            </p>
+        </main>
+    </div>
+    <script src="popup.js"></script>
+
 </body>
 </html>
