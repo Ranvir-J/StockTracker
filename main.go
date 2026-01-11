@@ -13,15 +13,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type PartItem struct {
+type Part struct { // expected json format from background.js
 	PartNumber string `json:"partNumber" bson:"partNumber" binding:"required"`
 	Quantity   int    `json:"quantity" bson:"quantity" binding:"required"`
 }
 
-type StoredDoc struct {
+type StoredDoc struct { // document format to store in mongodb
 	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	UserID    string             `bson:"userId" json:"userId"`
-	Items     []PartItem         `bson:"items" json:"items"`
+	Items     []Part             `bson:"items" json:"items"` // go slice of parts
 	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
 	Source    string             `bson:"source" json:"source"`
 }
@@ -70,7 +70,7 @@ func main() {
 	//   {"partNumber":"GN10346","quantity":2}
 	// ]
 	v1.POST("/ingest", func(c *gin.Context) {
-		var items []PartItem
+		var items []Part
 		if err := c.ShouldBindJSON(&items); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
