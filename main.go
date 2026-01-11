@@ -13,36 +13,28 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type part struct { // format for a singular part from json file
-	var partNum 
-	var quantity string
-
-}
-
-type IngestRequest struct { // format of the JSON expected by backend
-	Type    string                 `json:"type"`
-	Payload map[string]any         `json:"payload" binding:"required"`
+type PartItem struct {
+	PartNumber string `json:"partNumber" bson:"partNumber" binding:"required"`
+	Quantity   int    `json:"quantity" bson:"quantity" binding:"required"`
 }
 
 type StoredDoc struct {
 	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	UserID    string             `bson:"userId" json:"userId"`
-	Type      string             `bson:"type" json:"type"`
-	Payload   map[string]any      `bson:"payload" json:"payload"`
-	CreatedAt time.Time           `bson:"createdAt" json:"createdAt"`
+	Items     []PartItem         `bson:"items" json:"items"`
+	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
 	Source    string             `bson:"source" json:"source"`
 }
 
 func main() {
-	// load .env
 	_ = godotenv.Load()
 
-	// verify .env variables
 	mongoURI := mustGet("MONGODB_URI")
 	dbName := mustGet("MONGODB_DB")
 	collName := mustGet("MONGODB_COLL")
 	apiKey := mustGet("API_KEY")
 	extID := mustGet("CHROME_EXTENSION_ID")
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -56,18 +48,15 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	defer func() {
-		_ = client.Disconnect(context.Background())
-	}()
+	defer func() { _ = client.Disconnect(context.Background()) }()
 
-	// verify connection with MongoDB
 	if err := client.Ping(ctx, nil); err != nil {
 		panic(err)
 	}
 
 	coll := client.Database(dbName).Collection(collName)
 
-	// gin setup
+	// Gin setup
 	router := gin.New()
 	router.Use(gin.Logger(), gin.Recovery())
 	router.Use(corsForExtension(extID))
@@ -75,14 +64,23 @@ func main() {
 	v1 := router.Group("/v1")
 	v1.Use(apiKeyAuth(apiKey))
 
+	// Expects a JSON ARRAY:
+	// [
+	//   {"partNumber":"2CAM0352","quantity":1},
+	//   {"partNumber":"GN10346","quantity":2}
+	// ]
 	v1.POST("/ingest", func(c *gin.Context) {
-		var req IngestRequest
-		if err := c.ShouldBindJSON(&req); err != nil {
+		var items []PartItem
+		if err := c.ShouldBindJSON(&items); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		if len(items) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "empty items array"})
+			return
+		}
 
-		// temp optional userid header
+		// Optional user id header
 		userID := c.GetHeader("X-User-Id")
 		if userID == "" {
 			userID = "anonymous"
@@ -90,8 +88,7 @@ func main() {
 
 		doc := StoredDoc{
 			UserID:    userID,
-			Type:      req.Type,
-			Payload:   req.Payload,
+			Items:     items,
 			CreatedAt: time.Now().UTC(),
 			Source:    "chrome_extension",
 		}
