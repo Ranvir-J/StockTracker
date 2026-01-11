@@ -29,7 +29,7 @@ function extractData(data) {
 }
 
 document.getElementById("view-stock-btn").addEventListener("click", () => {
-  chrome.tabs.create({
-    url: chrome.runtime.getURL("fulltab.html")
+    chrome.tabs.create({
+      url: "https://google.com"
+    });
   });
-});
