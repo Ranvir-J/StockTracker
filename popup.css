@@ -10,6 +10,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #ffffff;
     color: #1f2933;
+    text-align: center;
+
 }
 
 /* Main container */
@@ -86,4 +88,22 @@ button {
 
 .secondary-button:hover {
     background-color: #eff6ff;
+}
+
+/* tables */
+
+table, th, td {
+    padding: 2px;
+}
+
+th {
+    color: white;
+    background-color: #1d4ed8;
+}
+
+tr {
+    background-color: #d5d5d5;
+}
+tr:hover {
+    background-color: #ffffff;
 }
