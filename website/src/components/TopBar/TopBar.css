@@ -1,0 +1,36 @@
+/* .topbar {
+  display:flex;
+  align-items: center;
+
+  position: fixed;
+  top:0px;
+  left: 0px;
+  width: 100vw;
+  height: 68.5px;
+  justify-content: right;
+  background-color: white;
+}
+
+.topbar button img {
+  width: 25px;
+  height: 25px;
+}
+
+.topbar button {
+  height: 32px;
+  padding: 6px;
+  border:none;
+  outline:none;
+  background-color: transparent;
+  margin: 0px 5px 0px 5px;
+}
+
+.topbar button:hover {
+  background-color: #f6f6f6;
+}
+
+#profile-picture {
+  border-radius: 100%;
+  border-width: 1px;
+  outline: black solid;
+} */
