@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -27,18 +28,23 @@ type StoredDoc struct { // document format to store in mongodb
 }
 
 func main() {
-	_ = godotenv.Load()
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Could not load .env correctly", err)
+		panic(err)
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
 	mongoURI := mustGet("MONGODB_URI")
 	dbName := mustGet("MONGODB_DB")
 	collName := mustGet("MONGODB_COLL")
 	apiKey := mustGet("API_KEY")
 	extID := mustGet("CHROME_EXTENSION_ID")
-
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
 
 	// MongoDB connection
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
