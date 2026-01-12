@@ -23,6 +23,8 @@ func main() {
 	db, err := config.connectDB()
 	helper.errorPanic(err)
 
+	db.IsErrUniqueConstraint()
+
 	server := &http.Server{
 		Addr:           ":" + port,
 		ReadTimeout:    10 * time.Second,
