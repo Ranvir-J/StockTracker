@@ -20,6 +20,9 @@ func main() {
 		port = "8080"
 	}
 
+	db, err := config.connectDB()
+	helper.errorPanic(err)
+
 	server := &http.Server{
 		Addr:           ":" + port,
 		ReadTimeout:    10 * time.Second,
