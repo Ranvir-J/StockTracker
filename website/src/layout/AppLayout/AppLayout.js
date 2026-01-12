@@ -6,14 +6,17 @@ import "./AppLayout.css"
 function AppLayout() {
   return (
     <div className="app-layout">
-        <TopBar />
-        <div className="main-area">
-            <Sidebar />
-            <div className="content-area">
-                <Outlet />
-            </div>
+      <div className="main-area">
+        <Sidebar />
+        <div className="right-panel">
+          <TopBar />
+          <div className="content-area">
+            <Outlet />
+          </div>
         </div>
-        </div>
+      </div>
+    </div>
+
   );
 }
 

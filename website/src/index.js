@@ -38,10 +38,6 @@ const router = createBrowserRouter([
       { path: "/OrderHistory", element: <OrderHistory /> }
     ]
   },
-  { path: "/", element: <Dashboard />, errorElement:  <NotFound />},
-  { path: "/Inventory", element: <Inventory /> },
-  { path: "/OrderHistory", element: <OrderHistory /> }
-  
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

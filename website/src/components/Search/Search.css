@@ -3,17 +3,14 @@
 .search {
   --padding: 14px;
 
-  width: max-content;
   display:flex;
   align-items: center;
   padding: var(--padding);
   border-radius: 28px;
   background-color: #efeeee;
   width: 300px;
+  max-width: 100%;
   transition: background 0.25s;
-  position: fixed;
-  left: 256px;
-  top: 10px;
 }
 
 .search:focus-within {
