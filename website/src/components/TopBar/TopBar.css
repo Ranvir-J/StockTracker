@@ -1,4 +1,4 @@
-.topbar {
+/* .topbar {
   display:flex;
   align-items: center;
 
@@ -17,10 +17,10 @@
 }
 
 .topbar button {
-  height: 37px;
+  height: 32px;
   padding: 6px;
-  border: none;
-  outline: none;
+  border:none;
+  outline:none;
   background-color: transparent;
   margin: 0px 5px 0px 5px;
 }
@@ -33,4 +33,4 @@
   border-radius: 100%;
   border-width: 1px;
   outline: black solid;
-}
+} */
