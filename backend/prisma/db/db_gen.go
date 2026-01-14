@@ -83,7 +83,8 @@ generator db {
 }
 
 model Post {
-  partnum  String @id @unique @db.VarChar(100) // primary key
+  id       String @id @unique @db.VarChar(100)
+  partnum  String @db.VarChar(100) // primary key
   quantity Int    @default(0)
   //userid String @unique @db.VarChar(12) 
 
@@ -208,6 +209,7 @@ const (
 type PostScalarFieldEnum string
 
 const (
+	PostScalarFieldEnumID        PostScalarFieldEnum = "id"
 	PostScalarFieldEnumPartnum   PostScalarFieldEnum = "partnum"
 	PostScalarFieldEnumQuantity  PostScalarFieldEnum = "quantity"
 	PostScalarFieldEnumCreatedAt PostScalarFieldEnum = "createdAt"
@@ -267,6 +269,8 @@ func IsErrUniqueConstraint(err error) (*types.ErrUniqueConstraint[prismaFields],
 type prismaFields string
 
 type postPrismaFields = prismaFields
+
+const postFieldID postPrismaFields = "id"
 
 const postFieldPartnum postPrismaFields = "partnum"
 
@@ -351,6 +355,7 @@ type PostModel struct {
 
 // InnerPost holds the actual data
 type InnerPost struct {
+	ID        string    `json:"id"`
 	Partnum   string    `json:"partnum"`
 	Quantity  int       `json:"quantity"`
 	CreatedAt *DateTime `json:"createdAt,omitempty"`
@@ -359,6 +364,7 @@ type InnerPost struct {
 
 // RawPostModel is a struct for Post when used in raw queries
 type RawPostModel struct {
+	ID        RawString    `json:"id"`
 	Partnum   RawString    `json:"partnum"`
 	Quantity  RawInt       `json:"quantity"`
 	CreatedAt *RawDateTime `json:"createdAt,omitempty"`
@@ -390,6 +396,11 @@ var Post = postQuery{}
 
 // postQuery exposes query functions for the post model
 type postQuery struct {
+
+	// ID
+	//
+	// @required
+	ID postQueryIDString
 
 	// Partnum
 	//
@@ -464,6 +475,353 @@ func (postQuery) And(params ...PostWhereParam) postDefaultParam {
 }
 
 // base struct
+type postQueryIDString struct{}
+
+// Set the required value of ID
+func (r postQueryIDString) Set(value string) postWithPrismaIDSetParam {
+
+	return postWithPrismaIDSetParam{
+		data: builder.Field{
+			Name:  "id",
+			Value: value,
+		},
+	}
+
+}
+
+// Set the optional value of ID dynamically
+func (r postQueryIDString) SetIfPresent(value *String) postWithPrismaIDSetParam {
+	if value == nil {
+		return postWithPrismaIDSetParam{}
+	}
+
+	return r.Set(*value)
+}
+
+func (r postQueryIDString) Equals(value string) postWithPrismaIDEqualsUniqueParam {
+
+	return postWithPrismaIDEqualsUniqueParam{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "equals",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) EqualsIfPresent(value *string) postWithPrismaIDEqualsUniqueParam {
+	if value == nil {
+		return postWithPrismaIDEqualsUniqueParam{}
+	}
+	return r.Equals(*value)
+}
+
+func (r postQueryIDString) Order(direction SortOrder) postDefaultParam {
+	return postDefaultParam{
+		data: builder.Field{
+			Name:  "id",
+			Value: direction,
+		},
+	}
+}
+
+func (r postQueryIDString) Cursor(cursor string) postCursorParam {
+	return postCursorParam{
+		data: builder.Field{
+			Name:  "id",
+			Value: cursor,
+		},
+	}
+}
+
+func (r postQueryIDString) In(value []string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "in",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) InIfPresent(value []string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.In(value)
+}
+
+func (r postQueryIDString) NotIn(value []string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "notIn",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) NotInIfPresent(value []string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.NotIn(value)
+}
+
+func (r postQueryIDString) Lt(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "lt",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) LtIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.Lt(*value)
+}
+
+func (r postQueryIDString) Lte(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "lte",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) LteIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.Lte(*value)
+}
+
+func (r postQueryIDString) Gt(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "gt",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) GtIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.Gt(*value)
+}
+
+func (r postQueryIDString) Gte(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "gte",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) GteIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.Gte(*value)
+}
+
+func (r postQueryIDString) Contains(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "contains",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) ContainsIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.Contains(*value)
+}
+
+func (r postQueryIDString) StartsWith(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "startsWith",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) StartsWithIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.StartsWith(*value)
+}
+
+func (r postQueryIDString) EndsWith(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "endsWith",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) EndsWithIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.EndsWith(*value)
+}
+
+func (r postQueryIDString) Mode(value QueryMode) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "mode",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) ModeIfPresent(value *QueryMode) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.Mode(*value)
+}
+
+func (r postQueryIDString) Not(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "not",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+func (r postQueryIDString) NotIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.Not(*value)
+}
+
+// deprecated: Use StartsWith instead.
+
+func (r postQueryIDString) HasPrefix(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "starts_with",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+// deprecated: Use StartsWithIfPresent instead.
+func (r postQueryIDString) HasPrefixIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.HasPrefix(*value)
+}
+
+// deprecated: Use EndsWith instead.
+
+func (r postQueryIDString) HasSuffix(value string) postParamUnique {
+	return postParamUnique{
+		data: builder.Field{
+			Name: "id",
+			Fields: []builder.Field{
+				{
+					Name:  "ends_with",
+					Value: value,
+				},
+			},
+		},
+	}
+}
+
+// deprecated: Use EndsWithIfPresent instead.
+func (r postQueryIDString) HasSuffixIfPresent(value *string) postParamUnique {
+	if value == nil {
+		return postParamUnique{}
+	}
+	return r.HasSuffix(*value)
+}
+
+func (r postQueryIDString) Field() postPrismaFields {
+	return postFieldID
+}
+
+// base struct
 type postQueryPartnumString struct{}
 
 // Set the required value of Partnum
@@ -487,9 +845,9 @@ func (r postQueryPartnumString) SetIfPresent(value *String) postWithPrismaPartnu
 	return r.Set(*value)
 }
 
-func (r postQueryPartnumString) Equals(value string) postWithPrismaPartnumEqualsUniqueParam {
+func (r postQueryPartnumString) Equals(value string) postWithPrismaPartnumEqualsParam {
 
-	return postWithPrismaPartnumEqualsUniqueParam{
+	return postWithPrismaPartnumEqualsParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -502,9 +860,9 @@ func (r postQueryPartnumString) Equals(value string) postWithPrismaPartnumEquals
 	}
 }
 
-func (r postQueryPartnumString) EqualsIfPresent(value *string) postWithPrismaPartnumEqualsUniqueParam {
+func (r postQueryPartnumString) EqualsIfPresent(value *string) postWithPrismaPartnumEqualsParam {
 	if value == nil {
-		return postWithPrismaPartnumEqualsUniqueParam{}
+		return postWithPrismaPartnumEqualsParam{}
 	}
 	return r.Equals(*value)
 }
@@ -527,8 +885,8 @@ func (r postQueryPartnumString) Cursor(cursor string) postCursorParam {
 	}
 }
 
-func (r postQueryPartnumString) In(value []string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) In(value []string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -541,15 +899,15 @@ func (r postQueryPartnumString) In(value []string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) InIfPresent(value []string) postParamUnique {
+func (r postQueryPartnumString) InIfPresent(value []string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.In(value)
 }
 
-func (r postQueryPartnumString) NotIn(value []string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) NotIn(value []string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -562,15 +920,15 @@ func (r postQueryPartnumString) NotIn(value []string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) NotInIfPresent(value []string) postParamUnique {
+func (r postQueryPartnumString) NotInIfPresent(value []string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.NotIn(value)
 }
 
-func (r postQueryPartnumString) Lt(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) Lt(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -583,15 +941,15 @@ func (r postQueryPartnumString) Lt(value string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) LtIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) LtIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.Lt(*value)
 }
 
-func (r postQueryPartnumString) Lte(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) Lte(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -604,15 +962,15 @@ func (r postQueryPartnumString) Lte(value string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) LteIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) LteIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.Lte(*value)
 }
 
-func (r postQueryPartnumString) Gt(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) Gt(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -625,15 +983,15 @@ func (r postQueryPartnumString) Gt(value string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) GtIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) GtIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.Gt(*value)
 }
 
-func (r postQueryPartnumString) Gte(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) Gte(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -646,15 +1004,15 @@ func (r postQueryPartnumString) Gte(value string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) GteIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) GteIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.Gte(*value)
 }
 
-func (r postQueryPartnumString) Contains(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) Contains(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -667,15 +1025,15 @@ func (r postQueryPartnumString) Contains(value string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) ContainsIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) ContainsIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.Contains(*value)
 }
 
-func (r postQueryPartnumString) StartsWith(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) StartsWith(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -688,15 +1046,15 @@ func (r postQueryPartnumString) StartsWith(value string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) StartsWithIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) StartsWithIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.StartsWith(*value)
 }
 
-func (r postQueryPartnumString) EndsWith(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) EndsWith(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -709,15 +1067,15 @@ func (r postQueryPartnumString) EndsWith(value string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) EndsWithIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) EndsWithIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.EndsWith(*value)
 }
 
-func (r postQueryPartnumString) Mode(value QueryMode) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) Mode(value QueryMode) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -730,15 +1088,15 @@ func (r postQueryPartnumString) Mode(value QueryMode) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) ModeIfPresent(value *QueryMode) postParamUnique {
+func (r postQueryPartnumString) ModeIfPresent(value *QueryMode) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.Mode(*value)
 }
 
-func (r postQueryPartnumString) Not(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) Not(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -751,17 +1109,17 @@ func (r postQueryPartnumString) Not(value string) postParamUnique {
 	}
 }
 
-func (r postQueryPartnumString) NotIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) NotIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.Not(*value)
 }
 
 // deprecated: Use StartsWith instead.
 
-func (r postQueryPartnumString) HasPrefix(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) HasPrefix(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -775,17 +1133,17 @@ func (r postQueryPartnumString) HasPrefix(value string) postParamUnique {
 }
 
 // deprecated: Use StartsWithIfPresent instead.
-func (r postQueryPartnumString) HasPrefixIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) HasPrefixIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.HasPrefix(*value)
 }
 
 // deprecated: Use EndsWith instead.
 
-func (r postQueryPartnumString) HasSuffix(value string) postParamUnique {
-	return postParamUnique{
+func (r postQueryPartnumString) HasSuffix(value string) postDefaultParam {
+	return postDefaultParam{
 		data: builder.Field{
 			Name: "partnum",
 			Fields: []builder.Field{
@@ -799,9 +1157,9 @@ func (r postQueryPartnumString) HasSuffix(value string) postParamUnique {
 }
 
 // deprecated: Use EndsWithIfPresent instead.
-func (r postQueryPartnumString) HasSuffixIfPresent(value *string) postParamUnique {
+func (r postQueryPartnumString) HasSuffixIfPresent(value *string) postDefaultParam {
 	if value == nil {
-		return postParamUnique{}
+		return postDefaultParam{}
 	}
 	return r.HasSuffix(*value)
 }
@@ -1932,6 +2290,7 @@ type postActions struct {
 }
 
 var postOutput = []builder.Output{
+	{Name: "id"},
 	{Name: "partnum"},
 	{Name: "quantity"},
 	{Name: "createdAt"},
@@ -2101,6 +2460,84 @@ func (p postSetParam) field() builder.Field {
 }
 
 func (p postSetParam) postModel() {}
+
+type PostWithPrismaIDEqualsSetParam interface {
+	field() builder.Field
+	getQuery() builder.Query
+	equals()
+	postModel()
+	idField()
+}
+
+type PostWithPrismaIDSetParam interface {
+	field() builder.Field
+	getQuery() builder.Query
+	postModel()
+	idField()
+}
+
+type postWithPrismaIDSetParam struct {
+	data  builder.Field
+	query builder.Query
+}
+
+func (p postWithPrismaIDSetParam) field() builder.Field {
+	return p.data
+}
+
+func (p postWithPrismaIDSetParam) getQuery() builder.Query {
+	return p.query
+}
+
+func (p postWithPrismaIDSetParam) postModel() {}
+
+func (p postWithPrismaIDSetParam) idField() {}
+
+type PostWithPrismaIDWhereParam interface {
+	field() builder.Field
+	getQuery() builder.Query
+	postModel()
+	idField()
+}
+
+type postWithPrismaIDEqualsParam struct {
+	data  builder.Field
+	query builder.Query
+}
+
+func (p postWithPrismaIDEqualsParam) field() builder.Field {
+	return p.data
+}
+
+func (p postWithPrismaIDEqualsParam) getQuery() builder.Query {
+	return p.query
+}
+
+func (p postWithPrismaIDEqualsParam) postModel() {}
+
+func (p postWithPrismaIDEqualsParam) idField() {}
+
+func (postWithPrismaIDSetParam) settable()  {}
+func (postWithPrismaIDEqualsParam) equals() {}
+
+type postWithPrismaIDEqualsUniqueParam struct {
+	data  builder.Field
+	query builder.Query
+}
+
+func (p postWithPrismaIDEqualsUniqueParam) field() builder.Field {
+	return p.data
+}
+
+func (p postWithPrismaIDEqualsUniqueParam) getQuery() builder.Query {
+	return p.query
+}
+
+func (p postWithPrismaIDEqualsUniqueParam) postModel() {}
+func (p postWithPrismaIDEqualsUniqueParam) idField()   {}
+
+func (postWithPrismaIDEqualsUniqueParam) unique() {}
+func (postWithPrismaIDEqualsUniqueParam) equals() {}
 
 type PostWithPrismaPartnumEqualsSetParam interface {
 	field() builder.Field
@@ -2418,6 +2855,7 @@ func (postWithPrismaUpdatedAtEqualsUniqueParam) equals() {}
 
 // Creates a single post.
 func (r postActions) CreateOne(
+	_id PostWithPrismaIDSetParam,
 	_partnum PostWithPrismaPartnumSetParam,
 
 	optional ...PostSetParam,
@@ -2433,6 +2871,7 @@ func (r postActions) CreateOne(
 
 	var fields []builder.Field
 
+	fields = append(fields, _id.field())
 	fields = append(fields, _partnum.field())
 
 	for _, q := range optional {
@@ -3226,6 +3665,7 @@ func (r postActions) UpsertOne(
 
 func (r postUpsertOne) Create(
 
+	_id PostWithPrismaIDSetParam,
 	_partnum PostWithPrismaPartnumSetParam,
 
 	optional ...PostSetParam,
@@ -3234,6 +3674,7 @@ func (r postUpsertOne) Create(
 	v.query = r.query
 
 	var fields []builder.Field
+	fields = append(fields, _id.field())
 	fields = append(fields, _partnum.field())
 
 	for _, q := range optional {
@@ -3285,6 +3726,7 @@ func (r postUpsertOne) Update(
 
 func (r postUpsertOne) CreateOrUpdate(
 
+	_id PostWithPrismaIDSetParam,
 	_partnum PostWithPrismaPartnumSetParam,
 
 	optional ...PostSetParam,
@@ -3293,6 +3735,7 @@ func (r postUpsertOne) CreateOrUpdate(
 	v.query = r.query
 
 	var fields []builder.Field
+	fields = append(fields, _id.field())
 	fields = append(fields, _partnum.field())
 
 	for _, q := range optional {
