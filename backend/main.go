@@ -6,6 +6,9 @@ import (
 	"os"
 	"time"
 
+	"stBackend/config"
+	"stBackend/helper"
+
 	"github.com/joho/godotenv"
 )
 
@@ -20,10 +23,12 @@ func main() {
 		port = "8080"
 	}
 
-	db, err := config.connectDB()
-	helper.errorPanic(err)
+	db, err := config.ConnectDB()
+	helper.ErrorPanic(err)
 
-	db.IsErrUniqueConstraint()
+	defer db.Disconnect()
+
+	//db.IsErrUniqueConstraint()
 
 	server := &http.Server{
 		Addr:           ":" + port,
