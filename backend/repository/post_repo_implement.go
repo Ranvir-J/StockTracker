@@ -15,14 +15,14 @@ type PostRepositoryImplement struct { // check if a post repo implementation has
 
 // Delete implements [PostRepository].
 func (p *PostRepositoryImplement) Delete(ctx context.Context, postId string) {
-	result, err := p.Db.Post.FindUnique(db.Post.Partnum.Equals(postId)).Delete().Exec(ctx)
+	result, err := p.Db.Post.FindUnique(db.Post.ID.Equals(postId)).Delete().Exec(ctx)
 	helper.ErrorPanic(err)
 	fmt.Println("Rows affected: ", result)
 }
 
 // FindById implements [PostRepository].
 func (p *PostRepositoryImplement) FindById(ctx context.Context, postId string) (model.Post, error) {
-	post, err := p.Db.Post.FindFirst(db.Post.Partnum.Equals(postId)).Exec(ctx)
+	post, err := p.Db.Post.FindFirst(db.Post.ID.Equals(postId)).Exec(ctx)
 	// p.Db.Post represents the prisma client (SQL equivalent: FROM Post)
 	// FindFirst() represents a WHERE clause (so here, it's WHERE Post.Partnum = postID)
 	// FindFirst() limits to returning 0 or 1 record
@@ -61,6 +61,7 @@ func (p *PostRepositoryImplement) GetAll(ctx context.Context) []model.Post {
 // Save implements [PostRepository].
 func (p *PostRepositoryImplement) Save(ctx context.Context, post model.Post) {
 	result, err := p.Db.Post.CreateOne(
+		db.Post.ID.Set(post.Id),
 		db.Post.Partnum.Set(post.Partnum),
 		db.Post.Quantity.Set(post.Quantity),
 	).Exec(ctx)
@@ -70,7 +71,7 @@ func (p *PostRepositoryImplement) Save(ctx context.Context, post model.Post) {
 
 // Update implements [PostRepository].
 func (p *PostRepositoryImplement) Update(ctx context.Context, post model.Post) {
-	result, err := p.Db.Post.FindMany(db.Post.Partnum.Equals(post.Partnum)).Update(
+	result, err := p.Db.Post.FindMany(db.Post.ID.Equals(post.Id)).Update(
 		db.Post.Partnum.Set(post.Partnum),
 		db.Post.Quantity.Set(post.Quantity),
 	).Exec(ctx)

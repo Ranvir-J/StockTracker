@@ -1,4 +1,4 @@
-package data
+package response
 
 type WebResponse struct { // expected json format from background.js
 	PartNumber string `json:"partNumber" binding:"required"`
