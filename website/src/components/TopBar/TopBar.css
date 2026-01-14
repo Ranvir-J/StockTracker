@@ -1,14 +1,15 @@
-/* .topbar {
+.topbar { 
   display:flex;
   align-items: center;
 
-  position: fixed;
   top:0px;
   left: 0px;
-  width: 100vw;
+  width: 100%;
   height: 68.5px;
-  justify-content: right;
+  flex-shrink: 0;
   background-color: white;
+  box-sizing: border-box;
+  padding-left: 10px;
 }
 
 .topbar button img {
@@ -16,11 +17,17 @@
   height: 25px;
 }
 
+.topbar-buttons {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
 .topbar button {
-  height: 32px;
+  height: 37px;
   padding: 6px;
-  border:none;
-  outline:none;
+  border: none;
+  outline: none;
   background-color: transparent;
   margin: 0px 5px 0px 5px;
 }
@@ -33,4 +40,4 @@
   border-radius: 100%;
   border-width: 1px;
   outline: black solid;
-} */
+}

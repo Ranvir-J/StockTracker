@@ -1,0 +1,33 @@
+.inventory-summary {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    margin-top: 2px;
+    background-color: rgb(248, 252, 254);
+    outline: #d5d5d5 solid;
+    outline-width: 2px;
+}
+
+.inventory-summary * {
+    margin: 0px;
+    padding: 12px;
+}
+
+.top-widget {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+td a {
+    color: black;
+}
+
+.stock-table {
+    outline: #d5d5d5 solid;
+    outline-width: 2px;
+    margin: 15px;
+    box-shadow: 2px 2px 5px 2px #d5d5d5;
+}
+

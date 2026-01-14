@@ -1,5 +1,5 @@
 import Search from "../Search/Search.js"
-import "./TopBar"
+import "./TopBar.css"
 
 function TopBar() {
     return (
