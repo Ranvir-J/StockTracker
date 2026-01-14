@@ -13,7 +13,7 @@ code {
     monospace;
 }
 
-.warning-item {
+.warning-item, .warning-item a {
   color:red;
 }
 
