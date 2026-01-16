@@ -8,17 +8,13 @@ body {
   background-color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 .warning-item, .warning-item a {
   color:red;
 }
 
 h3 {
     font-weight: 500;
+    margin: 0px;
 }
 
 a {
@@ -48,4 +44,14 @@ a:hover {
 
 a.active {
     background-color: rgba(255, 255, 255, 0.2);
+}
+
+table {
+    outline: #d5d5d5 solid;
+    outline-width: 2px;
+    margin: 12px;
+    box-shadow: 2px 2px 5px 2px #d5d5d5;
+    border-radius: 5px;
+    background-color: white;
+    border-collapse: collapse;
 }

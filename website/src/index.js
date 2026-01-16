@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppLayout from "./layout/AppLayout/AppLayout.js";
 import Dashboard from "./pages/Dashboard/Dashboard.js"
-import Inventory from "./pages/Inventory/Inventory.js"
+import Inventory from "./pages/Inventory/InventoryPage.js"
 import OrderHistory from './pages/OrderHistory/OrderHistory.js';
 import NotFound from "./pages/NotFound/NotFound.js"
 

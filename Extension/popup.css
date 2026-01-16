@@ -1,12 +1,8 @@
-/* 
-   Root sizing rules:
-   - Width is fixed to prevent horizontal growth
-   - Height is content-driven (no fixed height)
-*/
+
 body {
     margin: 0;
     padding: 0;
-    width: 320px;            /* Fixed popup width */
+    width: 320px;
     font-family: Arial, Helvetica, sans-serif;
     background-color: #ffffff;
     color: #1f2933;
@@ -37,7 +33,7 @@ body {
 .popup-content {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Controls vertical spacing between elements */
+    gap: 12px;
 }
 
 /* Text styles */
@@ -70,20 +66,20 @@ button {
 
 /* Primary action */
 .primary-button {
-    background-color: #2563eb;
+    background-color: #1f2933;
     color: #ffffff;
     border: none;
 }
 
 .primary-button:hover {
-    background-color: #1d4ed8;
+    background-color: #3a4d60;
 }
 
 /* Secondary action */
 .secondary-button {
     background-color: #ffffff;
-    color: #2563eb;
-    border: 1px solid #2563eb;
+    color: #1f2933;
+    border: 1px solid #1f2933;
 }
 
 .secondary-button:hover {
@@ -98,7 +94,7 @@ table, th, td {
 
 th {
     color: white;
-    background-color: #1d4ed8;
+    background-color: #1f2933;
 }
 
 tr {

@@ -5,6 +5,16 @@ import { useState } from "react";
 
 function Dashboard() {
     const [timeRange, setTimeRange] = useState("30d");
+    const [inventorySummary, setInventorySummary] = useState({
+    lowStock: 7,
+    outOfStock: 6,
+    totalItems: 50
+    });
+
+    const [usageData, setUsageData] = useState([
+        { partNumber: "2CAM0352", cost: 110.08, quantity: 71 },
+        { partNumber: "2CRK0306", cost: 46.05, quantity: 54 },
+        { partNumber: "CA12089", cost: 23.22, quantity: 36 }]);
 
     return (
         <div className="top-widget">
@@ -13,28 +23,16 @@ function Dashboard() {
                 <table className="stock-table">
                     <tbody>
                         <tr className="warning-item">
-                            <td >
-                                <NavLink to="/">Low Stock items</NavLink>
-                            </td>
-                            <td >
-                                <NavLink to="/">3</NavLink>
-                            </td>
+                            <td ><NavLink to="/">Low Stock</NavLink></td>
+                            <td ><NavLink to="/">{inventorySummary.lowStock}</NavLink></td>
                         </tr>
                         <tr className="warning-item">
-                            <td>
-                                <NavLink to="/">Out of Stock</NavLink>
-                            </td>
-                            <td>
-                                <NavLink to="/">4</NavLink>
-                            </td>
+                            <td><NavLink to="/">Out of Stock</NavLink></td>
+                            <td><NavLink to="/">{inventorySummary.outOfStock}</NavLink></td>
                         </tr>
                         <tr>
-                            <td>
-                                <NavLink to="/Inventory">All items</NavLink>
-                            </td>
-                            <td>
-                                <NavLink to="/Inventory">9</NavLink>
-                            </td>
+                            <td><NavLink to="/Inventory">All Items</NavLink></td>
+                            <td><NavLink to="/Inventory">{inventorySummary.totalItems}</NavLink></td>
                         </tr>
                 </tbody>
                 </table>
@@ -47,44 +45,28 @@ function Dashboard() {
                 <table className="usage-table">
                     <tbody>
                         <tr>
-                            <td>
-                                PN1
-                            </td>
-                            <td>
-                                PN2
-                            </td>
-                            <td>
-                                PN3
-                            </td>
+                            {usageData.map(item => (
+                                <td key={item.partNumber}>{item.partNumber}</td>
+                            ))}
                         </tr>
                         <tr>
-                            <td>
-                                price1
-                            </td>
-                            <td>
-                                price2
-                            </td>
-                            <td>
-                                price3
-                            </td>
+                            {usageData.map(item => (
+                                <td key={item.partNumber}>${item.cost.toFixed(2)}</td>
+                            ))}
                         </tr>
                         <tr>
-                            <td>
-                                q1
-                            </td>
-                            <td>
-                                q2
-                            </td>
-                            <td>
-                                q3
-                            </td>
+                            {usageData.map(item => (
+                                <td key={item.partNumber}>{item.quantity} items</td>
+                            ))}
                         </tr>
                     </tbody>
                 </table>
-                    
             </div>
         </div>
+        
     );
 }
+
+
 
 export default Dashboard;
