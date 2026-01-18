@@ -12,6 +12,7 @@ require (
 
 require (
 	github.com/google/go-cmp v0.7.0 // indirect
+	github.com/julienschmidt/httprouter v1.3.0
 	github.com/stretchr/testify v1.11.1 // indirect
 	go.mongodb.org/mongo-driver/v2 v2.0.1 // indirect
 )
