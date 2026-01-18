@@ -68,7 +68,7 @@ func (controller *PostController) GetAll(writer http.ResponseWriter, requests *h
 }
 
 // find by id function
-func (controller *PostController) FindbyId(writer http.ResponseWriter, requests *http.Request, params httprouter.Params) {
+func (controller *PostController) FindById(writer http.ResponseWriter, requests *http.Request, params httprouter.Params) {
 	postId := params.ByName("postId")
 	result := controller.PostService.FindById(requests.Context(), postId)
 	web_response := response.WebResponse{

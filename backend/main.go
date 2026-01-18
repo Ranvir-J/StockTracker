@@ -7,7 +7,11 @@ import (
 	"time"
 
 	"stBackend/config"
+	"stBackend/controller"
 	"stBackend/helper"
+	"stBackend/repository"
+	"stBackend/router"
+	"stBackend/service"
 
 	"github.com/joho/godotenv"
 )
@@ -28,10 +32,24 @@ func main() {
 
 	defer db.Disconnect()
 
+	// repository
+
+	postRepo := repository.NewPostRepo(db)
+
+	// service
+	postService := service.NewPostServiceImplement(postRepo)
+
+	// controller
+	postController := controller.NewPostController(postService)
+
+	// router
+	routes := router.NewRouter(postController)
+
 	//db.IsErrUniqueConstraint()
 
 	server := &http.Server{
 		Addr:           ":" + port,
+		Handler:        routes,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20, // one megabyte (bitshift)
