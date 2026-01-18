@@ -5,3 +5,5 @@ func ErrorPanic(err error) {
 		panic(err)
 	}
 }
+
+// error panic function? Does the equivalent of panic(err), shuts down program immediately
