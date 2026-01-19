@@ -5,7 +5,7 @@ let lastItems = "";
 setInterval(() => {
     console.log("yo");
 
-  const tables = document.querySelectorAll(".orderitemsummarytable");
+  const tables = document.querySelectorAll("#storecheckouttable");
   if (!tables.length) return;
   console.log(tables);
 
@@ -13,9 +13,17 @@ setInterval(() => {
 
   tables.forEach(table => {
     table.querySelectorAll("tbody tr").forEach(row => {
+      var partNumber = "";
       const cells = row.querySelectorAll("td");
-      const partNumber = cells[1]?.innerText.trim();
-      const quantity = parseInt(row.querySelector(".centered")?.innerText, 10);
+      const partNumberData = cells[2].querySelector(".cartpartnumber a")
+      if (partNumberData) {
+        partNumber = partNumberData.innerHTML;
+      }else{
+        return;
+      }
+      const quantityData = cells[4].querySelector(".centered input");
+      const quantity = quantityData.value;
+      console.log("quantity", quantity, "part number", partNumber);
 
       if (partNumber && !isNaN(quantity)) {
         items.push({ partNumber, quantity });
