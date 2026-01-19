@@ -8,7 +8,7 @@ function SideBar() {
             <h1 id="main-title">StockTracker</h1>
             <NavLink to="/">Dashboard</NavLink>
             <NavLink to="/Inventory">Inventory</NavLink>
-            <NavLink to="/OrderHistory">Order History</NavLink>
+            {/* <NavLink to="/OrderHistory">Order History</NavLink> */}
         </div>
     )
 }
