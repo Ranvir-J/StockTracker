@@ -5,7 +5,7 @@ import (
 	"stBackend/prisma/db"
 )
 
-func connectDB() (*db.PrismaClient, error) {
+func ConnectDB() (*db.PrismaClient, error) {
 	client := db.NewClient()
 	if err := client.Prisma.Connect(); err != nil {
 		return nil, err
