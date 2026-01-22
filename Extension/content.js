@@ -3,13 +3,13 @@ console.log("content.js loaded");
 let lastItems = "";
 
 setInterval(() => {
-    console.log("yo");
+    console.log("running");
 
   const tables = document.querySelectorAll("#storecheckouttable");
   if (!tables.length) return;
   console.log(tables);
 
-  const items = [];
+  const items = ["1"];
 
   tables.forEach(table => {
     table.querySelectorAll("tbody tr").forEach(row => {
