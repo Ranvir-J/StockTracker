@@ -30,6 +30,6 @@ function extractData(data) {
 
 document.getElementById("view-stock-btn").addEventListener("click", () => {
     chrome.tabs.create({
-      url: "https://google.com"
+      url: "https://stock-tracker-three-gamma.vercel.app"
     });
   });

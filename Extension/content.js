@@ -9,7 +9,7 @@ setInterval(() => {
   if (!tables.length) return;
   console.log(tables);
 
-  const items = ["1"];
+  const items = [];
 
   tables.forEach(table => {
     table.querySelectorAll("tbody tr").forEach(row => {
@@ -25,8 +25,11 @@ setInterval(() => {
       const quantity = quantityData.value;
       console.log("quantity", quantity, "part number", partNumber);
 
+      const uid = crypto.randomUUID();
+      // console.log("unique id is:", uid)
+
       if (partNumber && !isNaN(quantity)) {
-        items.push({ partNumber, quantity });
+        items.push({ id: uid, partNumber, quantity });
       }
     });
   });

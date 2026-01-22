@@ -4,6 +4,7 @@ import './index.css';
 import App from './components/App/App.js';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 import AppLayout from "./layout/AppLayout/AppLayout.js";
 import Dashboard from "./pages/Dashboard/Dashboard.js"

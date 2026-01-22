@@ -10,7 +10,7 @@
     "offscreen"
   ],
    "host_permissions": [
-    "https://b2b.hdap.ca/store/checkout/"
+    "https://b2b.hdap.ca/store/checkout*"
   ],
    "background": {
     "service_worker": "background.js"
@@ -20,7 +20,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://b2b.hdap.ca/store/checkout/"],
+      "matches": ["https://b2b.hdap.ca/store/checkout*"],
       "js": ["content.js"]
     }
   ],
